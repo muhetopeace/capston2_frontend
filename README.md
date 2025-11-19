@@ -154,7 +154,7 @@ npm install
 Create a `.env` file in the root directory:
 ```env
 DATABASE_URL="postgresql://postgres:Peamb%40987@localhost:5432/medium_clone?schema=public"
-NEXTAUTH_SECRET="your-secret-key-change-in-production"
+NEXTAUTH_SECRET="Peamb-key"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 

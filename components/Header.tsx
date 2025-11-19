@@ -12,12 +12,16 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
-          <Link href="/" className="text-2xl font-bold text-gray-900">
+          <Link 
+            href="/" 
+            className="text-lg font-bold text-gray-900 truncate max-w-[150px] sm:max-w-[200px] md:max-w-none sm:text-xl md:text-2xl"
+          >
             publisher-platform
           </Link>
         </div>
 
-        <div className="hidden items-center space-x-6 md:flex">
+        {/* Desktop Navigation - Hidden on mobile, visible from md up */}
+        <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
           <Link
             href="/"
             className="text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -59,7 +63,7 @@ export default function Header() {
               </Link>
               <button
                 onClick={() => signOut()}
-                className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                className="rounded-full bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800 lg:px-4 lg:py-2"
               >
                 Sign Out
               </button>
@@ -74,7 +78,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/auth/signup"
-                className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                className="rounded-full bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800 lg:px-4 lg:py-2"
               >
                 Get Started
               </Link>
@@ -82,9 +86,9 @@ export default function Header() {
           )}
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button - Hidden from md up */}
         <button
-          className="md:hidden"
+          className="flex md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -106,25 +110,28 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - Hidden from md up */}
       {isMenuOpen && (
         <div className="border-t border-gray-200 md:hidden">
           <div className="space-y-1 px-4 py-3">
             <Link
               href="/"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               href="/tags"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              onClick={() => setIsMenuOpen(false)}
             >
               Tags
             </Link>
             <Link
               href="/search"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              onClick={() => setIsMenuOpen(false)}
             >
               Search
             </Link>
@@ -133,23 +140,29 @@ export default function Header() {
                 <Link
                   href="/blog"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Blog
                 </Link>
                 <Link
                   href="/editor"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Write
                 </Link>
                 <Link
                   href={`/profile/${session.user?.id}`}
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Profile
                 </Link>
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    signOut();
+                    setIsMenuOpen(false);
+                  }}
                   className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-700 hover:bg-gray-50"
                 >
                   Sign Out
@@ -160,12 +173,14 @@ export default function Header() {
                 <Link
                   href="/auth/signin"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Get Started
                 </Link>

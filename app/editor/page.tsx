@@ -151,8 +151,8 @@ export default function EditorPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="mb-8 text-3xl font-bold text-gray-900">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+      <h1 className="mb-6 sm:mb-8 text-2xl sm:text-3xl font-bold text-gray-900">
         {editSlug ? "Edit Post" : "Create New Post"}
       </h1>
 
@@ -232,7 +232,7 @@ export default function EditorPage() {
                 setValue("content", newContent);
               }}
               config={{
-                height: 500,
+                height: typeof window !== "undefined" && window.innerWidth < 640 ? 300 : 500,
                 placeholder: "Start writing...",
               }}
             />
@@ -256,11 +256,11 @@ export default function EditorPage() {
           </label>
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             type="submit"
             disabled={isSubmitting || postMutation.isPending}
-            className="rounded-md bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            className="w-full sm:w-auto rounded-md bg-blue-600 px-4 sm:px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
             {isSubmitting || postMutation.isPending
               ? "Saving..."
@@ -271,7 +271,7 @@ export default function EditorPage() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="rounded-md border border-gray-300 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="w-full sm:w-auto rounded-md border border-gray-300 px-4 sm:px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Cancel
           </button>

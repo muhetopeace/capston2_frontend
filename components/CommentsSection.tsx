@@ -194,26 +194,26 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
   };
 
   return (
-    <div className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">Comments</h2>
+    <div className="mt-8 sm:mt-12">
+      <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-gray-900">Comments</h2>
 
       {session ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="mb-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-6 sm:mb-8">
           <textarea
             {...register("content")}
             rows={4}
-            className="w-full rounded-md border border-gray-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 sm:px-4 py-2 sm:py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Write a comment..."
           />
           {errors.content && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               {errors.content.message}
             </p>
           )}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-3 rounded-md bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            className="mt-3 w-full sm:w-auto rounded-md bg-blue-600 px-4 sm:px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
             {isSubmitting ? "Posting..." : "Post Comment"}
           </button>
@@ -235,7 +235,7 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
       {isLoading ? (
         <p className="text-gray-600">Loading comments...</p>
       ) : data?.comments && data.comments.length > 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {data.comments.map((comment: any) => (
             <CommentItem
               key={comment.id}

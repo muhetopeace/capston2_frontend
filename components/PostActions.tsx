@@ -96,11 +96,11 @@ export default function PostActions({
   };
 
   return (
-    <div className="mt-8 flex items-center space-x-6 border-t border-gray-200 pt-8">
+    <div className="mt-6 sm:mt-8 flex items-center flex-wrap gap-3 sm:gap-6 border-t border-gray-200 pt-6 sm:pt-8">
       <button
         onClick={handleLike}
         disabled={likeMutation.isPending}
-        className="flex items-center space-x-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+        className="flex items-center space-x-2 rounded-full border border-gray-300 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
       >
         <svg
           className="h-5 w-5"
@@ -121,7 +121,7 @@ export default function PostActions({
       <button
         onClick={handleClap}
         disabled={clapMutation.isPending}
-        className="flex items-center space-x-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+        className="flex items-center space-x-2 rounded-full border border-gray-300 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
       >
         <svg
           className="h-5 w-5"

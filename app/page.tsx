@@ -36,15 +36,15 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900">Latest Stories</h1>
-        <p className="mt-2 text-lg text-gray-600">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Latest Stories</h1>
+        <p className="mt-2 text-base sm:text-lg text-gray-600">
           Discover stories, thinking, and expertise from writers on any topic.
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post: any) => (
           <div
             key={post.id}
@@ -61,14 +61,14 @@ export default async function Home() {
                   />
                 </div>
               )}
-              <h2 className="mb-2 text-xl font-semibold text-gray-900 group-hover:text-blue-600">
+              <h2 className="mb-2 text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-blue-600 line-clamp-2">
                 {post.title}
               </h2>
               {post.excerpt && (
                 <p className="mb-4 text-gray-600">{truncate(post.excerpt, 150)}</p>
               )}
             </Link>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div className="flex items-center space-x-2">
                 {post.author.image && (
                   <Image
@@ -79,11 +79,11 @@ export default async function Home() {
                     className="rounded-full"
                   />
                 )}
-                <span className="text-sm text-gray-600">
+                <span className="text-xs sm:text-sm text-gray-600 truncate">
                   {post.author.name || "Anonymous"}
                 </span>
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-gray-500">
                 {post.publishedAt ? formatDate(post.publishedAt) : ""}
               </span>
             </div>
@@ -100,7 +100,7 @@ export default async function Home() {
                 ))}
               </div>
             )}
-            <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500">
+            <div className="mt-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm text-gray-500">
               <span>{post._count?.likes || 0} likes</span>
               <span>{post._count?.claps || 0} claps</span>
               <span>{post._count?.comments || 0} comments</span>

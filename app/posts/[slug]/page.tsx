@@ -77,44 +77,46 @@ export default async function PostPage({
   }
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-      <header className="mb-8">
-        <h1 className="mb-4 text-4xl font-bold text-gray-900">{post.title}</h1>
+    <article className="mx-auto max-w-4xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="mb-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-tight">{post.title}</h1>
 
         {post.excerpt && (
-          <p className="mb-6 text-xl text-gray-600">{post.excerpt}</p>
+          <p className="mb-4 sm:mb-6 text-lg sm:text-xl text-gray-600">{post.excerpt}</p>
         )}
 
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center space-x-3 sm:space-x-4">
             {post.author.image && (
               <Image
                 src={post.author.image}
                 alt={post.author.name || "Author"}
                 width={48}
                 height={48}
-                className="rounded-full"
+                className="rounded-full flex-shrink-0"
               />
             )}
             <div>
               <Link
                 href={`/profile/${post.author.id}`}
-                className="block font-semibold text-gray-900 hover:text-blue-600"
+                className="block font-semibold text-sm sm:text-base text-gray-900 hover:text-blue-600"
               >
                 {post.author.name || "Anonymous"}
               </Link>
               {post.publishedAt && (
-                <time className="text-sm text-gray-500">
+                <time className="text-xs sm:text-sm text-gray-500">
                   {formatDate(post.publishedAt)}
                 </time>
               )}
             </div>
           </div>
-          <FollowButton userId={post.author.id} />
+          <div className="flex-shrink-0">
+            <FollowButton userId={post.author.id} />
+          </div>
         </div>
 
         {post.coverImage && (
-          <div className="relative mb-8 h-96 w-full overflow-hidden rounded-lg">
+          <div className="relative mb-6 sm:mb-8 h-48 sm:h-64 md:h-96 w-full overflow-hidden rounded-lg">
             <Image
               src={post.coverImage}
               alt={post.title}

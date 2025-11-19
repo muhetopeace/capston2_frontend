@@ -39,26 +39,26 @@ export default async function BlogPage() {
   const draftPosts = posts.filter((post:any) => !post.published);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">My Blog</h1>
-          <p className="mt-2 text-lg text-gray-600">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">My Blog</h1>
+          <p className="mt-2 text-base sm:text-lg text-gray-600">
             Manage your posts and drafts
           </p>
         </div>
         <Link
           href="/editor"
-          className="rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+          className="rounded-full bg-blue-600 px-4 py-2 sm:px-6 sm:py-3 text-xs sm:text-sm font-medium text-white hover:bg-blue-700 transition-colors text-center"
         >
           Write New Post
         </Link>
       </div>
 
       {draftPosts.length > 0 && (
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Drafts</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-8 sm:mb-12">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Drafts</h2>
+          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {draftPosts.map((post: any) => (
               <div
                 key={post.id}
@@ -85,14 +85,14 @@ export default async function BlogPage() {
                     />
                   </div>
                 )}
-                <h3 className="mb-2 text-xl font-semibold text-gray-900 group-hover:text-blue-600">
+                <h3 className="mb-2 text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-blue-600 line-clamp-2">
                   {post.title}
                 </h3>
                 {post.excerpt && (
                   <p className="mb-4 text-gray-600">{truncate(post.excerpt, 150)}</p>
                 )}
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <span>Last updated: {formatDate(post.updatedAt)}</span>
+                <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500">
+                  <span className="truncate">Last updated: {formatDate(post.updatedAt)}</span>
                 </div>
               </div>
             ))}
@@ -101,9 +101,9 @@ export default async function BlogPage() {
       )}
 
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Published Posts</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Published Posts</h2>
         {publishedPosts.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {publishedPosts.map((post: any) => (
               <div
                 key={post.id}
@@ -148,11 +148,11 @@ export default async function BlogPage() {
                     ))}
                   </div>
                 )}
-                <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs sm:text-sm text-gray-500">
                   <span>
                     {post.publishedAt ? formatDate(post.publishedAt) : ""}
                   </span>
-                  <div className="flex space-x-4">
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
                     <span>{post._count.likes} likes</span>
                     <span>{post._count.comments} comments</span>
                   </div>

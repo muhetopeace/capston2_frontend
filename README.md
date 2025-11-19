@@ -1,4 +1,4 @@
-# Medium Clone - Blogging Platform
+#  publisher-platform
 
 A full-stack blogging platform built with Next.js, featuring user authentication, post creation, comments, likes, claps, and social features like following users.
 

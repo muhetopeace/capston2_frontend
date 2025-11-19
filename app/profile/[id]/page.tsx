@@ -78,10 +78,10 @@ export default async function ProfilePage({
               )}
               <div className="mt-4 flex space-x-6 text-sm text-gray-600">
                 <span>
-                  <strong>{user._count.followers}</strong> Followers
+                  <strong>{user._count.followers}</strong> Following
                 </span>
                 <span>
-                  <strong>{user._count.following}</strong> Following
+                  <strong>{user._count.following}</strong> Follower
                 </span>
                 <span>
                   <strong>{user.posts.length}</strong> Posts

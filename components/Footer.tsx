@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">Medium Clone</h3>
+            <h3 className="text-lg font-bold text-gray-900">publisher-platform</h3>
             <p className="mt-2 text-sm text-gray-600">
               A platform for sharing ideas and stories.
             </p>
@@ -85,7 +85,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8">
           <p className="text-center text-sm text-gray-600">
-            © {new Date().getFullYear()} Medium Clone. All rights reserved.
+            © {new Date().getFullYear()} publisher-platform. All rights reserved.
           </p>
         </div>
       </div>

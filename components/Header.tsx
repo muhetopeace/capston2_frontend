@@ -13,7 +13,7 @@ export default function Header() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-gray-900">
-            Medium Clone
+            publisher-platform
           </Link>
         </div>
 

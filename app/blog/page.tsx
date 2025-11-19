@@ -35,8 +35,8 @@ export default async function BlogPage() {
   }
 
   const posts = await getUserPosts(session.user.id);
-  const publishedPosts = posts.filter((post) => post.published);
-  const draftPosts = posts.filter((post) => !post.published);
+  const publishedPosts = posts.filter((post:any) => post.published);
+  const draftPosts = posts.filter((post:any) => !post.published);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">

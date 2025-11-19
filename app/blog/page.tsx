@@ -36,7 +36,6 @@ export default async function BlogPage() {
 
   const posts = await getUserPosts(session.user.id);
   const publishedPosts = posts.filter((post:any) => post.published);
-  const draftPosts = posts.filter((post:any) => !post.published);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
@@ -44,7 +43,7 @@ export default async function BlogPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">My Blog</h1>
           <p className="mt-2 text-base sm:text-lg text-gray-600">
-            Manage your posts and drafts
+            Manage your posts
           </p>
         </div>
         <Link
@@ -54,51 +53,6 @@ export default async function BlogPage() {
           Write New Post
         </Link>
       </div>
-
-      {draftPosts.length > 0 && (
-        <div className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Drafts</h2>
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {draftPosts.map((post: any) => (
-              <div
-                key={post.id}
-                className="group rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-lg"
-              >
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
-                    Draft
-                  </span>
-                  <Link
-                    href={`/editor?edit=${post.slug}`}
-                    className="text-sm text-blue-600 hover:text-blue-800"
-                  >
-                    Edit
-                  </Link>
-                </div>
-                {post.coverImage && (
-                  <div className="relative mb-4 h-48 w-full overflow-hidden rounded-lg">
-                    <Image
-                      src={post.coverImage}
-                      alt={post.title}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <h3 className="mb-2 text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-blue-600 line-clamp-2">
-                  {post.title}
-                </h3>
-                {post.excerpt && (
-                  <p className="mb-4 text-gray-600">{truncate(post.excerpt, 150)}</p>
-                )}
-                <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500">
-                  <span className="truncate">Last updated: {formatDate(post.updatedAt)}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Published Posts</h2>

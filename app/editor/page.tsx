@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import JoditEditor from "jodit-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const postSchema = z.object({
@@ -72,6 +71,21 @@ async function getPost(slug: string) {
   return response.json();
 }
 
+// Function to strip HTML tags from content
+function stripHtmlTags(html: string): string {
+  // Use regex to strip HTML tags and decode common entities
+  return html
+    .replace(/<[^>]*>/g, "") // Remove HTML tags
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .trim();
+}
+
 export default function EditorPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -88,7 +102,7 @@ export default function EditorPage() {
   } = useForm<PostFormData>({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      published: false,
+      published: true,
     },
   });
 
@@ -101,15 +115,19 @@ export default function EditorPage() {
   useEffect(() => {
     if (postData?.post) {
       setValue("title", postData.post.title);
-      setValue("content", postData.post.content);
-      setContent(postData.post.content);
+      // Strip HTML tags if content contains HTML
+      const contentText = postData.post.content.includes("<") 
+        ? stripHtmlTags(postData.post.content) 
+        : postData.post.content;
+      setValue("content", contentText);
+      setContent(contentText);
       setValue("excerpt", postData.post.excerpt || "");
       setValue("coverImage", postData.post.coverImage || "");
       setValue(
         "tags",
         postData.post.tags?.map((tag: any) => tag.name).join(", ") || ""
       );
-      setValue("published", postData.post.published);
+      setValue("published", postData.post.published || true);
     }
   }, [postData, setValue]);
 
@@ -117,7 +135,8 @@ export default function EditorPage() {
     mutationFn: (data: PostFormData) =>
       editSlug ? updatePost(editSlug, data) : createPost(data),
     onSuccess: (data) => {
-      router.push(`/posts/${data.post.slug}`);
+      router.push(`/blog`);
+      router.refresh();
     },
   });
 
@@ -224,36 +243,22 @@ export default function EditorPage() {
           >
             Content
           </label>
-          <div className="mt-1">
-            <JoditEditor
-              value={content}
-              onChange={(newContent) => {
-                setContent(newContent);
-                setValue("content", newContent);
-              }}
-              config={{
-                height: typeof window !== "undefined" && window.innerWidth < 640 ? 300 : 500,
-                placeholder: "Start writing...",
-              }}
-            />
-          </div>
+          <textarea
+            {...register("content")}
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+              setValue("content", e.target.value);
+            }}
+            rows={15}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 font-mono text-sm"
+            placeholder="Start writing your content here..."
+          />
           {errors.content && (
             <p className="mt-1 text-sm text-red-600">
               {errors.content.message}
             </p>
           )}
-        </div>
-
-        <div className="flex items-center">
-          <input
-            {...register("published")}
-            type="checkbox"
-            id="published"
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-          />
-          <label htmlFor="published" className="ml-2 text-sm text-gray-700">
-            Publish immediately
-          </label>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

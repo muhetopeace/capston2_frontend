@@ -22,14 +22,14 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
-  comments      Comment[]
-  likes         Like[]
-  followers     Follow[]  @relation("UserFollowers")
-  following     Follow[]  @relation("UserFollowing")
-  claps         Clap[]
+  accounts  Account[]
+  sessions  Session[]
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  followers Follow[]  @relation("UserFollowers")
+  following Follow[]  @relation("UserFollowing")
+  claps     Clap[]
 }
 
 model Account {
@@ -68,24 +68,24 @@ model VerificationToken {
 }
 
 model Post {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
-  slug        String   @unique
-  content     String   @db.Text
-  excerpt     String?  @db.Text
+  slug        String    @unique
+  content     String    @db.Text
+  excerpt     String?   @db.Text
   coverImage  String?
-  published   Boolean  @default(false)
+  published   Boolean   @default(false)
   publishedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   authorId    String
 
-  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  tags        Tag[]     @relation("PostTags")
-  comments    Comment[]
-  likes       Like[]
-  claps       Clap[]
-  postTags    PostTag[]
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  tags     Tag[]     @relation("PostTags")
+  comments Comment[]
+  likes    Like[]
+  claps    Clap[]
+  postTags PostTag[]
 }
 
 model Tag {
@@ -94,8 +94,8 @@ model Tag {
   slug      String   @unique
   createdAt DateTime @default(now())
 
-  posts     Post[]   @relation("PostTags")
-  postTags  PostTag[]
+  posts    Post[]    @relation("PostTags")
+  postTags PostTag[]
 }
 
 model PostTag {
@@ -103,8 +103,8 @@ model PostTag {
   postId String
   tagId  String
 
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([postId, tagId])
 }
@@ -118,10 +118,10 @@ model Comment {
   authorId  String
   parentId  String?
 
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id])
-  replies   Comment[] @relation("CommentReplies")
+  post    Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author  User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
 }
 
 model Like {
@@ -130,8 +130,8 @@ model Like {
   postId    String
   userId    String
 
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userId])
 }
@@ -144,8 +144,8 @@ model Clap {
   postId    String
   userId    String
 
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userId])
 }
@@ -156,9 +156,8 @@ model Follow {
   followerId  String
   followingId String
 
-  follower    User     @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
-  following   User     @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+  follower  User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
 }
-

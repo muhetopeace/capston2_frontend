@@ -33,7 +33,7 @@ This is a modern blogging platform inspired by Medium, where users can:
 - **bcryptjs** - Password hashing
 - **Cloudinary** - Image upload and management (configured)
 
-### Development Tools
+ ## Development Tools
 - **Jest** - Testing framework
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
@@ -141,7 +141,7 @@ The application uses PostgreSQL with the following main models:
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone <https://github.com/muhetopeace/capston2_frontend.git>
 cd capston2_frontend
 ```
 
@@ -169,7 +169,7 @@ npx prisma migrate dev
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000)
+6. Open [https://github.com/muhetopeace/capston2_frontend.git](https://github.com/muhetopeace/capston2_frontend.git)
 
 ##  Available Scripts
 
@@ -257,6 +257,4 @@ This project is for educational purposes.
 
 This is a capstone project. For questions or issues, please contact the project maintainer.
 
-
-Built with ❤️ using Next.js and modern web technologies.
 

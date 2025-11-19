@@ -9,10 +9,10 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Medium Clone - Share Your Stories",
+  title: "publisher-platform - Share Your Stories",
   description: "A platform for sharing ideas, stories, and knowledge",
   openGraph: {
-    title: "Medium Clone - Share Your Stories",
+    title: "publisher-platform- Share Your Stories",
     description: "A platform for sharing ideas, stories, and knowledge",
     type: "website",
   },

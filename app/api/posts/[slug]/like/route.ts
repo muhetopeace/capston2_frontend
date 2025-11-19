@@ -25,12 +25,10 @@ export async function POST(
     }
 
     // Check if like already exists
-    const existingLike = await prisma.like.findUnique({
+    const existingLike = await prisma.like.findFirst({
       where: {
-        userId_postId: {
-          userId: session.user.id,
-          postId: post.id,
-        },
+        userId: session.user.id,
+        postId: post.id,
       },
     });
 

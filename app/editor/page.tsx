@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -75,10 +75,8 @@ async function getPost(slug: string) {
 export default function EditorPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [content, setContent] = useState("");
-  const searchParams = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : ""
-  );
   const editSlug = searchParams.get("edit");
 
   const {

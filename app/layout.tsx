@@ -29,7 +29,12 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 pt-20 pb-8 bg-gradient-to-b from-white via-blue-50/20 to-indigo-50/20 min-h-[calc(100vh-5rem)]">{children}</main>
+
+            {/* Added padding-bottom so footer does not overlap */}
+            <main className="flex-1 pt-20 pb-28 bg-gradient-to-b from-white via-blue-50/20 to-indigo-50/20 min-h-[calc(100vh-5rem)]">
+              {children}
+            </main>
+
             <Footer />
           </div>
           <Analytics />
@@ -38,4 +43,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 

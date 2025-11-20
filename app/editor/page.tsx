@@ -528,14 +528,14 @@ export default function EditorPage() {
             type="button"
             onClick={handleSaveDraft}
             disabled={isSavingDraft || isSubmitting || postMutation.isPending}
-            className="w-full sm:w-auto rounded-md border border-gray-300 px-4 sm:px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="w-full sm:w-auto rounded-md border bg-blue-600 border-blue-600 px-4 sm:px-6 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-50"
           >
             {isSavingDraft ? "Saving Draft..." : "Save Draft"}
           </button>
           <button
             type="button"
             onClick={() => router.back()}
-            className="w-full sm:w-auto rounded-md border border-gray-300 px-4 sm:px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="w-full sm:w-auto rounded-md border  bg-blue-600 border-blue-600 px-4 sm:px-6 py-2 text-sm font-medium text-white hover:bg-blue-500"
           >
             Cancel
           </button>

@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-indigo-100 bg-gradient-to-r from-indigo-50 to-blue-50 w-full fixed bottom-0 left-0">
-      <div className="mx-auto max-w-7xl px-4 py-2 sm:px-4 lg:px-5">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4">
+    <footer className="border-t border-indigo-100 bg-gradient-to-r from-indigo-50 to-blue-50 w-full  left-0">
+      <div className="mx-auto max-w-7xl px-4  sm:px-4 lg:px-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           <div>
             <h3 className="text-lg font-bold text-blue-700">publisher-platform</h3>
             <p className="mt-1 text-sm text-indigo-600">

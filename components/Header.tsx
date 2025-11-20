@@ -9,12 +9,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 shadow-sm backdrop-blur-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link 
             href="/" 
-            className="text-lg font-bold text-gray-900 truncate max-w-[150px] sm:max-w-[200px] md:max-w-none sm:text-xl md:text-2xl"
+            className="text-lg font-bold text-blue-700 hover:text-blue-800 truncate max-w-[150px] sm:max-w-[200px] md:max-w-none sm:text-xl md:text-2xl transition-colors"
           >
             publisher-platform
           </Link>
@@ -24,19 +24,19 @@ export default function Header() {
         <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
           <Link
             href="/"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900"
+            className="text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
           >
             Home
           </Link>
           <Link
             href="/tags"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900"
+            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
           >
             Tags
           </Link>
           <Link
             href="/search"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900"
+            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
           >
             Search
           </Link>
@@ -45,25 +45,25 @@ export default function Header() {
             <>
               <Link
                 href="/blog"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
               >
                 Blog
               </Link>
               <Link
                 href="/editor"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
               >
                 Write
               </Link>
               <Link
                 href={`/profile/${session.user?.id}`}
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
               >
                 Profile
               </Link>
               <button
                 onClick={() => signOut()}
-                className="rounded-full bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800 lg:px-4 lg:py-2"
+                className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:from-blue-700 hover:to-indigo-700 lg:px-4 lg:py-2 transition-all shadow-sm"
               >
                 Sign Out
               </button>
@@ -72,13 +72,13 @@ export default function Header() {
             <>
               <Link
                 href="/auth/signin"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
               >
                 Sign In
               </Link>
               <Link
                 href="/auth/signup"
-                className="rounded-full bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800 lg:px-4 lg:py-2"
+                className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:from-blue-700 hover:to-indigo-700 lg:px-4 lg:py-2 transition-all shadow-sm"
               >
                 Get Started
               </Link>
@@ -112,25 +112,25 @@ export default function Header() {
 
       {/* Mobile menu - Hidden from md up */}
       {isMenuOpen && (
-        <div className="border-t border-gray-200 md:hidden">
+        <div className="border-t border-blue-100 bg-white md:hidden">
           <div className="space-y-1 px-4 py-3">
             <Link
               href="/"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              className="block rounded-md px-3 py-2 text-base font-medium text-blue-700 hover:bg-blue-50 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               href="/tags"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Tags
             </Link>
             <Link
               href="/search"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Search
@@ -139,21 +139,21 @@ export default function Header() {
               <>
                 <Link
                   href="/blog"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Blog
                 </Link>
                 <Link
                   href="/editor"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Write
                 </Link>
                 <Link
                   href={`/profile/${session.user?.id}`}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Profile
@@ -163,7 +163,7 @@ export default function Header() {
                     signOut();
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-blue-700 hover:bg-blue-50 transition-colors"
                 >
                   Sign Out
                 </button>
@@ -172,14 +172,14 @@ export default function Header() {
               <>
                 <Link
                   href="/auth/signin"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-indigo-50 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Get Started

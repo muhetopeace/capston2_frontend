@@ -7,8 +7,8 @@ import { z } from "zod";
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
-  excerpt: z.string().optional(),
-  coverImage: z.string().url().optional().or(z.literal("")),
+  excerpt: z.string().optional().nullable(),
+  coverImage: z.string().url().optional().nullable().or(z.literal("")),
   tags: z.array(z.string()).optional(),
   published: z.boolean().optional(),
 });
@@ -73,6 +73,15 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
+    
+    // Clean up empty strings for optional fields
+    if (body.coverImage === "" || body.coverImage === null) {
+      body.coverImage = undefined;
+    }
+    if (body.excerpt === "" || body.excerpt === null) {
+      body.excerpt = undefined;
+    }
+    
     const validatedData = postSchema.parse(body);
 
     // Create post
@@ -129,6 +138,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ post: postWithRelations }, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error("Validation error:", error.issues);
       return NextResponse.json(
         { error: "Validation error", issues: error.issues },
         { status: 400 }
@@ -136,8 +146,9 @@ export async function POST(request: Request) {
     }
 
     console.error("Error creating post:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to create post";
     return NextResponse.json(
-      { error: "Failed to create post" },
+      { error: errorMessage },
       { status: 500 }
     );
   }

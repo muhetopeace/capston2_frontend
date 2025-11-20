@@ -1,0 +1,5 @@
+/* Fix for invalid CSS syntax in Jodit */
+.jodit-file-browser-tree__item:hover .jodit-file-browser-tree__item-title {
+  color: var(--jd-color-text);
+}
+

@@ -115,4 +115,18 @@ body {
   margin-bottom: 1.5em;
 }
 
+/* Jodit Editor Styles */
+.jodit-container {
+  min-height: 400px;
+}
+
+.jodit-wysiwyg {
+  min-height: 400px;
+}
+
+/* Preview mode styles */
+.preview-content {
+  min-height: 400px;
+}
+
 

@@ -24,7 +24,27 @@ function stripHtmlTags(html: string): string {
 }
 
 export default function PostContent({ content }: PostContentProps) {
-  // If content contains HTML, strip it first
+  // Check if content is HTML (from Jodit editor) or Markdown
+  const isHTML = content.includes("<") && (
+    content.includes("<p>") || 
+    content.includes("<div>") || 
+    content.includes("<h1>") || 
+    content.includes("<img>") ||
+    content.includes("<strong>") ||
+    content.includes("<em>")
+  );
+  
+  if (isHTML) {
+    // Render HTML content directly
+    return (
+      <div 
+        className="prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    );
+  }
+  
+  // Render as Markdown
   const textContent = content.includes("<") ? stripHtmlTags(content) : content;
   
   return (

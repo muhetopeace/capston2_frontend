@@ -16,7 +16,7 @@ export default function Header() {
             href="/" 
             className="text-lg font-bold text-blue-700 hover:text-blue-800 truncate max-w-[150px] sm:max-w-[200px] md:max-w-none sm:text-xl md:text-2xl transition-colors"
           >
-            publisher-platform
+            PUBLISHER'S PLATFORM
           </Link>
         </div>
 

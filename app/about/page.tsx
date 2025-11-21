@@ -6,7 +6,7 @@ export default function AboutPage() {
 
         <div className="space-y-6 text-gray-700 leading-relaxed">
           <p className="text-lg">
-            Publisher-platform is a modern publishing platform that empowers writers to share their stories,
+            Publisher's-platform is a modern publishing platform that empowers writers to share their stories,
             ideas, and expertise with the world. Built with Next.js and React, we provide a seamless
             writing and reading experience.
           </p>

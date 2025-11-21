@@ -25,7 +25,6 @@ async function getPost(slug: string) {
       _count: {
         select: {
           likes: true,
-          claps: true,
           comments: true,
         },
       },
@@ -147,7 +146,6 @@ export default async function PostPage({
         postId={post.id}
         postSlug={post.slug}
         likesCount={post._count.likes}
-        clapsCount={post._count.claps}
       />
 
       <CommentsSection postSlug={post.slug} />

@@ -164,7 +164,7 @@ export default function SearchPage() {
 
       {!debouncedQuery && (
         <div className="py-12 text-center">
-          <p className="text-gray-600">Enter a search query to get started.</p>
+          <p className="text-green-500">Enter a search query to get started.</p>
         </div>
       )}
     </div>

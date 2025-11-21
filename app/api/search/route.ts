@@ -34,7 +34,6 @@ export async function GET(request: Request) {
         _count: {
           select: {
             likes: true,
-            claps: true,
             comments: true,
           },
         },

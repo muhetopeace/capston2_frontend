@@ -21,7 +21,6 @@ async function getAllPublishedPosts() {
       _count: {
         select: {
           likes: true,
-          claps: true,
           comments: true,
         },
       },
@@ -132,7 +131,6 @@ export default async function BlogPage() {
                   </span>
                   <div className="flex flex-wrap gap-3 sm:gap-4">
                     <span className="text-red-600 font-medium">{post._count.likes} likes</span>
-                    <span className="text-blue-600 font-medium">{post._count.claps} claps</span>
                     <span>{post._count.comments} comments</span>
                   </div>
                 </div>

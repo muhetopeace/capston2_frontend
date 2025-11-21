@@ -245,7 +245,7 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
           ))}
         </div>
       ) : (
-        <p className="text-white">No comments yet. Be the first to comment!</p>
+        <p className="text-gray-100">No comments yet. Be the first to comment!</p>
       )}
     </div>
   );

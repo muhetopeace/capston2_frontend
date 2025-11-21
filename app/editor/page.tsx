@@ -473,7 +473,7 @@ export default function EditorPage() {
         <div>
           <label
             htmlFor="tags"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-100"
           >
             Tags (comma-separated)
           </label>

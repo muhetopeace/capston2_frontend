@@ -41,13 +41,12 @@ export async function GET(request: Request) {
           },
         },
         tags: true,
-        _count: {
-          select: {
-            likes: true,
-            claps: true,
-            comments: true,
-          },
-        },
+            _count: {
+              select: {
+                likes: true,
+                comments: true,
+              },
+            },
       },
       orderBy: {
         publishedAt: "desc",

@@ -22,7 +22,6 @@ async function getTag(slug: string) {
           _count: {
             select: {
               likes: true,
-              claps: true,
               comments: true,
             },
           },
@@ -102,7 +101,6 @@ export default async function TagPage({
             </div>
             <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500">
               <span>{post._count.likes} likes</span>
-              <span>{post._count.claps} claps</span>
               <span>{post._count.comments} comments</span>
             </div>
           </Link>

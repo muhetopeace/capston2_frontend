@@ -18,7 +18,6 @@ async function getUser(id: string) {
           _count: {
             select: {
               likes: true,
-              claps: true,
               comments: true,
             },
           },

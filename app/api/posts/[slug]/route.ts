@@ -31,13 +31,12 @@ export async function GET(
           },
         },
         tags: true,
-        _count: {
-          select: {
-            likes: true,
-            claps: true,
-            comments: true,
+          _count: {
+            select: {
+              likes: true,
+              comments: true,
+            },
           },
-        },
       },
     });
 

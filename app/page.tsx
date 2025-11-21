@@ -18,7 +18,6 @@ async function getPosts() {
       _count: {
         select: {
           likes: true,
-          claps: true,
           comments: true,
         },
       },
@@ -102,7 +101,6 @@ export default async function Home() {
             )}
             <div className="mt-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
               <span className="text-red-600 font-medium">{post._count?.likes || 0} likes</span>
-              <span className="text-blue-600 font-medium">{post._count?.claps || 0} claps</span>
               <span className="text-gray-600">{post._count?.comments || 0} comments</span>
             </div>
           </div>

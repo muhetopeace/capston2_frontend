@@ -27,7 +27,7 @@ export default function AboutPage() {
             <ul className="list-disc list-inside space-y-2 text-gray-700">
               <li>Rich text editor for creating beautiful content</li>
               <li>Tag-based organization for easy discovery</li>
-              <li>Social features including likes, claps, and comments</li>
+              <li>Social features including likes and comments</li>
               <li>User profiles and following system</li>
               <li>Search functionality to find content</li>
               <li>Draft saving and publishing workflow</li>

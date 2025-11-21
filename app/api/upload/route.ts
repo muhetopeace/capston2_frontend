@@ -12,6 +12,15 @@ cloudinary.config({
 
 export async function POST(request: Request) {
   try {
+    // Check Cloudinary configuration
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+      console.error("Cloudinary configuration missing");
+      return NextResponse.json(
+        { error: "Image upload service not configured. Please contact administrator." },
+        { status: 500 }
+      );
+    }
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -24,6 +33,23 @@ export async function POST(request: Request) {
     if (!file) {
       return NextResponse.json(
         { error: "No file provided" },
+        { status: 400 }
+      );
+    }
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json(
+        { error: "File must be an image" },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      return NextResponse.json(
+        { error: "Image size must be less than 10MB" },
         { status: 400 }
       );
     }
@@ -42,21 +68,33 @@ export async function POST(request: Request) {
         .upload(dataURI, {
           folder: "blog-posts",
           resource_type: "auto",
+          transformation: [
+            { quality: "auto" },
+            { fetch_format: "auto" }
+          ],
         })
         .then((result) => resolve(result))
-        .catch((error) => reject(error));
+        .catch((error) => {
+          console.error("Cloudinary upload error:", error);
+          reject(error);
+        });
     });
 
     const result = uploadResult as any;
+
+    if (!result.secure_url) {
+      throw new Error("Upload succeeded but no URL returned");
+    }
 
     return NextResponse.json({
       url: result.secure_url,
       publicId: result.public_id,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error uploading image:", error);
+    const errorMessage = error?.message || "Failed to upload image";
     return NextResponse.json(
-      { error: "Failed to upload image" },
+      { error: errorMessage },
       { status: 500 }
     );
   }

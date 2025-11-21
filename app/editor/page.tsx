@@ -360,18 +360,27 @@ export default function EditorPage() {
         return formData;
       },
       isSuccess: (resp: any) => {
-        return resp && resp.url !== undefined;
+        return resp && resp.url !== undefined && !resp.error;
       },
       getMessage: (resp: any) => {
         return resp.error || "";
       },
       process: (resp: any) => {
+        if (resp.error) {
+          return {
+            files: [],
+            path: "",
+            baseurl: "",
+            error: 1,
+            msg: resp.error || "Upload failed",
+          };
+        }
         return {
           files: resp.url ? [resp.url] : [],
           path: resp.url || "",
           baseurl: "",
-          error: resp.error ? 1 : 0,
-          msg: resp.error || "",
+          error: 0,
+          msg: "",
         };
       },
       defaultHandlerSuccess: (data: any) => {
@@ -384,6 +393,7 @@ export default function EditorPage() {
       },
       error: (e: any) => {
         console.error("Upload error:", e);
+        alert(`Image upload failed: ${e.message || "Unknown error"}`);
       },
     },
     events: {

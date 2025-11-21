@@ -93,17 +93,17 @@ export default async function Home() {
                   <Link
                     key={tag.id}
                     href={`/tags/${tag.slug}`}
-                    className="rounded-full bg-blue-700 px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
+                    className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
                   >
                     {tag.name}
                   </Link>
                 ))}
               </div>
             )}
-            <div className="mt-4 flex items-center bg-white flex-wrap gap-3 text-xs sm:text-sm text-white">
-              <span>{post._count?.likes || 0} likes</span>
-              <span>{post._count?.claps || 0} claps</span>
-              <span>{post._count?.comments || 0} comments</span>
+            <div className="mt-4 flex items-center flex-wrap gap-3 text-xs sm:text-sm">
+              <span className="text-red-600 font-medium">{post._count?.likes || 0} likes</span>
+              <span className="text-blue-600 font-medium">{post._count?.claps || 0} claps</span>
+              <span className="text-gray-600">{post._count?.comments || 0} comments</span>
             </div>
           </div>
         ))}

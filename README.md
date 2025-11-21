@@ -82,7 +82,7 @@ capston2_frontend/
 
 ## Database Schema
 
-The application uses PostgreSQL with the following main models:
+The application uses supabase with the following main models:
 
 - **User** - User accounts with authentication
 - **Post** - Blog posts with content, metadata, and publishing status
@@ -134,7 +134,7 @@ The application uses PostgreSQL with the following main models:
 
 ### Prerequisites
 - Node.js 18+ 
-- PostgreSQL database
+- supabase database
 - npm or yarn
 
 ### Installation
@@ -153,7 +153,7 @@ npm install
 3. Set up environment variables
 Create a `.env` file in the root directory:
 ```env
-DATABASE_URL="postgresql://postgres:Peamb%40987@localhost:5432/medium_clone?schema=public"
+DATABASE_URL=DATABASE_URL="postgresql://postgres.ehcdumklnsdwbplabfby:Peamb123@aws-1-eu-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true"
 NEXTAUTH_SECRET="Peamb-key"
 NEXTAUTH_URL="http://localhost:3000"
 ```
@@ -233,12 +233,9 @@ The project includes Jest configuration for testing:
 ##  Deployment
 
 The application is ready for deployment on platforms like:
-- **Vercel** (recommended for Next.js)
-- **Netlify**
-- **AWS**
+- **Vercel** 
 - Any Node.js hosting platform
 
-Ensure environment variables are set in your deployment platform.
 
 ##  Security Features
 

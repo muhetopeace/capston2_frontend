@@ -3,16 +3,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import PostContent from "@/components/PostContent";
 import PostActions from "@/components/PostActions";
 import CommentsSection from "@/components/CommentsSection";
 import FollowButton from "@/components/FollowButton";
+import DeletePostButton from "@/components/DeletePostButton";
 import type { Metadata } from "next";
 
 async function getPost(slug: string) {
   const post = await prisma.post.findUnique({
     where: { slug },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      excerpt: true,
+      coverImage: true,
+      slug: true,
+      published: true,
+      publishedAt: true,
+      authorId: true,
       author: {
         select: {
           id: true,
@@ -70,6 +82,8 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
   const post = await getPost(slug);
+  const session = await getServerSession(authOptions);
+  const isOwner = session?.user?.id === post?.authorId;
 
   if (!post || !post.published) {
     notFound();
@@ -78,7 +92,20 @@ export default async function PostPage({
   return (
     <article className="mx-auto max-w-4xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
       <header className="mb-6 sm:mb-8">
-        <h1 className="mb-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-tight">{post.title}</h1>
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 leading-tight flex-1">{post.title}</h1>
+          {isOwner && (
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Link
+                href={`/editor?edit=${post.slug}`}
+                className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                Edit
+              </Link>
+              <DeletePostButton slug={post.slug} />
+            </div>
+          )}
+        </div>
 
         {post.excerpt && (
           <p className="mb-4 sm:mb-6 text-lg sm:text-xl text-gray-600">{post.excerpt}</p>

@@ -135,7 +135,7 @@ export default async function ProfilePage({
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-600">No published posts yet.</p>
+          <p className="text-center text-green-500">No published posts yet.</p>
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate, truncate } from "@/lib/utils";
+import DeletePostButton from "@/components/DeletePostButton";
 
 async function getAllPublishedPosts() {
   const posts = await prisma.post.findMany({
@@ -73,12 +74,15 @@ export default async function BlogPage() {
                     Published
                   </span>
                   {session?.user?.id === post.authorId && (
-                    <Link
-                      href={`/editor?edit=${post.slug}`}
-                      className="text-sm text-blue-600 hover:text-blue-800"
-                    >
-                      Edit
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/editor?edit=${post.slug}`}
+                        className="text-sm text-blue-600 hover:text-blue-800"
+                      >
+                        Edit
+                      </Link>
+                      <DeletePostButton slug={post.slug} />
+                    </div>
                   )}
                 </div>
                 <Link href={`/posts/${post.slug}`}>

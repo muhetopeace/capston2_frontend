@@ -24,21 +24,17 @@ const postSchema = z.object({
   content: z.string().min(1, "Content is required"),
   excerpt: z.string().optional(),
   coverImage: z.string().url().optional().or(z.literal("")),
-  tags: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   published: z.boolean().optional(),
 });
 
 type PostFormData = z.infer<typeof postSchema>;
 
 async function createPost(data: PostFormData) {
-  const tags = data.tags
-    ? data.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
-    : [];
-
   // Clean up coverImage - if empty string, set to undefined
   const cleanData = {
     ...data,
-    tags,
+    tags: data.tags || [],
     coverImage: data.coverImage && data.coverImage.trim() !== "" ? data.coverImage : undefined,
   };
 
@@ -64,14 +60,10 @@ async function createPost(data: PostFormData) {
 }
 
 async function updatePost(slug: string, data: PostFormData) {
-  const tags = data.tags
-    ? data.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
-    : [];
-
   // Clean up coverImage - if empty string, set to undefined
   const cleanData = {
     ...data,
-    tags,
+    tags: data.tags || [],
     coverImage: data.coverImage && data.coverImage.trim() !== "" ? data.coverImage : undefined,
   };
 
@@ -104,6 +96,14 @@ async function getPost(slug: string) {
   return response.json();
 }
 
+async function getTags() {
+  const response = await fetch("/api/tags");
+  if (!response.ok) {
+    throw new Error("Failed to fetch tags");
+  }
+  return response.json();
+}
+
 // Local storage key for drafts
 const DRAFT_STORAGE_KEY = "blog-post-draft";
 
@@ -114,6 +114,7 @@ export default function EditorPage() {
   const [content, setContent] = useState("");
   const [isPreview, setIsPreview] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const editorRef = useRef<any>(null);
   const editSlug = searchParams.get("edit");
 
@@ -132,7 +133,11 @@ export default function EditorPage() {
 
   const watchedTitle = watch("title");
   const watchedExcerpt = watch("excerpt");
-  const watchedTags = watch("tags");
+
+  const { data: tagsData } = useQuery({
+    queryKey: ["tags"],
+    queryFn: getTags,
+  });
 
   const { data: postData, isLoading: isLoadingPost } = useQuery({
     queryKey: ["post", editSlug],
@@ -152,7 +157,9 @@ export default function EditorPage() {
           setContent(draft.content || "");
           setValue("excerpt", draft.excerpt || "");
           setValue("coverImage", draft.coverImage || "");
-          setValue("tags", draft.tags || "");
+          const draftTags = Array.isArray(draft.tags) ? draft.tags : (draft.tags ? draft.tags.split(",").map((t: string) => t.trim()).filter(Boolean) : []);
+          setSelectedTags(draftTags);
+          setValue("tags", draftTags);
         } catch (error) {
           console.error("Error loading draft:", error);
         }
@@ -168,28 +175,27 @@ export default function EditorPage() {
       setContent(postData.post.content);
       setValue("excerpt", postData.post.excerpt || "");
       setValue("coverImage", postData.post.coverImage || "");
-      setValue(
-        "tags",
-        postData.post.tags?.map((tag: any) => tag.name).join(", ") || ""
-      );
+      const postTagNames = postData.post.tags?.map((tag: any) => tag.name) || [];
+      setSelectedTags(postTagNames);
+      setValue("tags", postTagNames);
       setValue("published", postData.post.published || false);
     }
   }, [postData, setValue]);
 
   // Auto-save draft to local storage
   useEffect(() => {
-    if (!editSlug && (watchedTitle || content || watchedExcerpt || watchedTags)) {
+    if (!editSlug && (watchedTitle || content || watchedExcerpt || selectedTags.length > 0)) {
       const draft = {
         title: watchedTitle || "",
         content: content || "",
         excerpt: watchedExcerpt || "",
-        tags: watchedTags || "",
+        tags: selectedTags,
         coverImage: watch("coverImage") || "",
         lastSaved: new Date().toISOString(),
       };
       localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
     }
-  }, [watchedTitle, content, watchedExcerpt, watchedTags, editSlug, watch]);
+  }, [watchedTitle, content, watchedExcerpt, selectedTags, editSlug, watch]);
 
   const postMutation = useMutation({
     mutationFn: (data: PostFormData) =>
@@ -285,7 +291,7 @@ export default function EditorPage() {
         content: content || "",
         excerpt: watchedExcerpt || "",
         coverImage: watch("coverImage") || "",
-        tags: watchedTags || "",
+        tags: selectedTags,
         published: false,
       };
 
@@ -312,6 +318,8 @@ export default function EditorPage() {
     askBeforePasteHTML: true,
     askBeforePasteFromWord: true,
     defaultActionOnPaste: "insert_as_html",
+    height: 600,
+    minHeight: 600,
     buttons: [
       "source",
       "|",
@@ -473,16 +481,53 @@ export default function EditorPage() {
         <div>
           <label
             htmlFor="tags"
-            className="block text-sm font-medium text-gray-100"
+            className="block text-sm font-medium text-gray-700"
           >
-            Tags (comma-separated)
+            Tags (select from list)
           </label>
-          <input
-            {...register("tags")}
-            type="text"
-            placeholder="e.g., technology, programming, web"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-          />
+          <select
+            multiple
+            value={selectedTags}
+            onChange={(e) => {
+              const selected = Array.from(e.target.selectedOptions, option => option.value);
+              setSelectedTags(selected);
+              setValue("tags", selected);
+            }}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 min-h-[100px]"
+            size={5}
+          >
+            {tagsData?.tags?.map((tag: any) => (
+              <option key={tag.id} value={tag.name}>
+                {tag.name}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-gray-500">
+            Hold Ctrl (or Cmd on Mac) to select multiple tags
+          </p>
+          {selectedTags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {selectedTags.map((tagName) => (
+                <span
+                  key={tagName}
+                  className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800"
+                >
+                  {tagName}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newTags = selectedTags.filter(t => t !== tagName);
+                      setSelectedTags(newTags);
+                      setValue("tags", newTags);
+                    }}
+                    className="ml-2 text-blue-600 hover:text-blue-800"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>
@@ -493,7 +538,7 @@ export default function EditorPage() {
             Content
           </label>
           {isPreview ? (
-            <div className="mt-1 min-h-[400px] rounded-md border border-gray-300 p-4 bg-white">
+            <div className="mt-1 min-h-[600px] rounded-md border border-gray-300 p-6 bg-white">
               <div className="prose max-w-none">
                 <div dangerouslySetInnerHTML={{ __html: content }} />
               </div>

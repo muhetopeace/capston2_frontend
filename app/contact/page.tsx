@@ -169,7 +169,7 @@ export default function ContactPage() {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Other Ways to Reach Us</h3>
           <div className="space-y-3 text-gray-600">
             <p>
-              <strong className="text-gray-900">Email:</strong> support@mediumclone.com
+              <strong className="text-gray-900">Email:</strong> support@publisher's-platiform.com
             </p>
             <p>
               <strong className="text-gray-900">Response Time:</strong> We typically respond within 24-48 hours

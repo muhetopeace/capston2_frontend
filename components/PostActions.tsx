@@ -69,7 +69,7 @@ export default function PostActions({
       <button
         onClick={handleLike}
         disabled={likeMutation.isPending}
-        className="flex items-center space-x-2 rounded-full border border-gray-300 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+        className="flex items-center space-x-2 rounded-full border border-gray-300 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-blue-500 hover:bg-gray-50 disabled:opacity-50"
       >
         <svg
           className="h-5 w-5"

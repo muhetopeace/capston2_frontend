@@ -8,7 +8,6 @@ if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set. Please add it in your environment variables.");
 }
 
-// Validate connection string format
 const dbUrl = process.env.DATABASE_URL;
 const isPooledConnection = dbUrl?.includes("pooler.supabase.com");
 

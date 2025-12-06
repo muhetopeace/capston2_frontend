@@ -81,56 +81,56 @@ function CommentItem({
   };
 
   return (
-    <div className="border-l-2 border-gray-200 pl-4">
-      <div className="mb-2 flex items-start space-x-3">
+    <div className="bg-gradient-to-br from-slate-800/80 via-slate-800/60 to-slate-900/80 rounded-xl p-5 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg hover:shadow-purple-500/10">
+      <div className="flex items-start space-x-4">
         {comment.author.image && (
           <Image
             src={comment.author.image}
             alt={comment.author.name || "User"}
-            width={32}
-            height={32}
-            className="rounded-full"
+            width={44}
+            height={44}
+            className="rounded-full ring-2 ring-purple-500/50 shadow-lg"
           />
         )}
         <div className="flex-1">
           <div className="flex items-center space-x-2">
-            <span className="font-semibold text-gray-900">
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
               {comment.author.name || "Anonymous"}
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-cyan-400/70">
               {formatDate(comment.createdAt)}
             </span>
           </div>
-          <p className="mt-1 text-gray-700">{comment.content}</p>
+          <p className="mt-2 text-gray-100 leading-relaxed">{comment.content}</p>
           {session && (
             <button
               onClick={() => setShowReplyForm(!showReplyForm)}
-              className="mt-2 text-sm text-blue-600 hover:text-blue-800"
+              className="mt-3 text-sm text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
             >
-              Reply
+              💬 Reply
             </button>
           )}
         </div>
       </div>
 
       {showReplyForm && (
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-5 ml-14 bg-slate-900/50 rounded-lg p-4 border border-cyan-500/20">
           <textarea
             {...register("content")}
             rows={3}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-purple-500/30 bg-slate-950 text-white px-4 py-3 text-sm focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 placeholder:text-gray-500"
             placeholder="Write a reply..."
           />
           {errors.content && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-2 text-sm text-rose-400">
               {errors.content.message}
             </p>
           )}
-          <div className="mt-2 flex space-x-2">
+          <div className="mt-3 flex space-x-2">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+              className="rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2 text-sm font-semibold text-white hover:from-purple-700 hover:to-cyan-700 disabled:opacity-50 transition-all shadow-lg hover:shadow-purple-500/50"
             >
               {isSubmitting ? "Posting..." : "Post Reply"}
             </button>
@@ -140,7 +140,7 @@ function CommentItem({
                 setShowReplyForm(false);
                 reset();
               }}
-              className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="rounded-lg border border-purple-500/30 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-slate-800 hover:border-purple-500/50 transition-all"
             >
               Cancel
             </button>
@@ -149,7 +149,7 @@ function CommentItem({
       )}
 
       {comment.replies && comment.replies.length > 0 && (
-        <div className="mt-4 space-y-4">
+        <div className="mt-4 ml-12 space-y-3">
           {comment.replies.map((reply: any) => (
             <CommentItem key={reply.id} comment={reply} postSlug={postSlug} />
           ))}
@@ -175,13 +175,14 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
   const { data, isLoading } = useQuery({
     queryKey: ["comments", postSlug],
     queryFn: () => getComments(postSlug),
+    refetchOnWindowFocus: false,
   });
 
   const commentMutation = useMutation({
     mutationFn: (data: CommentFormData) => createComment(postSlug, data.content),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postSlug] });
       reset();
+      queryClient.invalidateQueries({ queryKey: ["comments", postSlug] });
     },
   });
 
@@ -195,37 +196,37 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
 
   return (
     <div className="mt-8 sm:mt-12">
-      <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-gray-900">Comments</h2>
+      <h2 className="mb-6 sm:mb-8 text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-500">💬 Comments</h2>
 
       {session ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="mb-6 sm:mb-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-8 bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-xl p-5 sm:p-7 border border-purple-500/30 shadow-xl">
           <textarea
             {...register("content")}
             rows={4}
-            className="w-full rounded-md border border-gray-300 px-3 sm:px-4 py-2 sm:py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Write a comment..."
+            className="w-full rounded-xl border border-purple-500/30 bg-slate-950 text-white px-4 sm:px-5 py-3 sm:py-4 text-sm focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 placeholder:text-gray-500 transition-all"
+            placeholder="Share your thoughts..."
           />
           {errors.content && (
-            <p className="mt-1 text-xs sm:text-sm text-red-600">
+            <p className="mt-2 text-xs sm:text-sm text-rose-400">
               {errors.content.message}
             </p>
           )}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-3 w-full sm:w-auto rounded-md bg-blue-600 px-4 sm:px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            className="mt-4 w-full sm:w-auto rounded-xl bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 px-8 py-3 text-sm font-bold text-white hover:from-purple-700 hover:via-blue-700 hover:to-cyan-700 disabled:opacity-50 transition-all shadow-lg hover:shadow-purple-500/50 hover:scale-105"
           >
-            {isSubmitting ? "Posting..." : "Post Comment"}
+            {isSubmitting ? "✨ Posting..." : "✨ Post Comment"}
           </button>
         </form>
       ) : (
-        <div className="mb-8 rounded-md bg-gray-50 p-4 text-center">
-          <p className="text-gray-600">
+        <div className="mb-8 rounded-xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 border border-purple-500/30 p-8 text-center shadow-lg">
+          <p className="text-gray-200 text-lg">
             <button
               onClick={() => router.push("/auth/signin")}
-              className="text-blue-600 hover:text-blue-800"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 hover:from-purple-300 hover:to-cyan-300 font-bold transition-all"
             >
-              Sign in
+              🔐 Sign in
             </button>{" "}
             to leave a comment.
           </p>
@@ -233,9 +234,9 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
       )}
 
       {isLoading ? (
-        <p className="text-gray-600">Loading comments...</p>
+        <p className="text-cyan-400 animate-pulse">✨ Loading comments...</p>
       ) : data?.comments && data.comments.length > 0 ? (
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-5">
           {data.comments.map((comment: any) => (
             <CommentItem
               key={comment.id}
@@ -245,7 +246,7 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-100">No comments yet. Be the first to comment!</p>
+        <p className="text-gray-400 text-center py-12 text-lg">💭 No comments yet. Be the first to comment!</p>
       )}
     </div>
   );

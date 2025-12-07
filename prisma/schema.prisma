@@ -29,7 +29,6 @@ model User {
   likes     Like[]
   followers Follow[]  @relation("UserFollowers")
   following Follow[]  @relation("UserFollowing")
-  claps     Clap[]
 }
 
 model Account {
@@ -84,7 +83,6 @@ model Post {
   tags     Tag[]     @relation("PostTags")
   comments Comment[]
   likes    Like[]
-  claps    Clap[]
   postTags PostTag[]
 }
 
